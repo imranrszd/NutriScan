@@ -109,7 +109,7 @@ input::-webkit-inner-spin-button {
 
 input[type="number"] {
     font-family: 'Poppins', sans-serif;
-    width: 400px;
+    flex: 7;
     border: 0px;
     border-right: #24A850 solid 2px;
     padding: 5px;
@@ -127,6 +127,7 @@ form select {
 }
 
 .measurement {
+    flex: 1;
     border: 0px;
     padding: 5px 10px;
     font-family: 'Poppins', sans-serif;
@@ -151,7 +152,8 @@ form select {
     border: 3px solid #ffffff;
     border-radius: 10px;
     height: 80px;
-    width: 250px;
+    max-width: 250px;
+    min-width: 200px;
     cursor: pointer;
     display: flex;
     align-items: center;

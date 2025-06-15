@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriScan - Output</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="output.css">
+</head>
+
+<body>
+    <header>
+        <a href="index.html">
+            <p>NutriScan</p>
+        </a>
+    </header>
+    <div class="wrapper">
+        <h1 class="title">Assessment Results</h1>
+        <div class="results">
+            <span id="confidence">
+                <p>90%</p>
+            </span>
+            <span id="text-results">Your assessment results will be shown here.</span>
+        </div>
+    </div>
+
+    <script>
+        // const results = JSON.parse(localStorage.getItem('result'));
+        // if (results) {
+        //     document.getElementById('confidence').innerHTML = `<p>${results.confidence}%</p>`;
+        //     document.getElementById('text-results').innerHTML = `<p>${results.type}</p>`;
+        // } else {
+        //     document.getElementById('text-results').innerHTML = `<p>No results found. Please complete the assessment.</p>`;
+        // }
+    </script>
+</body>
+
+</html>

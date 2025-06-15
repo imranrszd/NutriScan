@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriScan - Question</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="question.css">
+</head>
+
+<body>
+    <header>
+        <a href="index.html">
+            <p>NutriScan</p>
+        </a>
+        <div class="progress-bar">
+            <span>
+                <hr id="progress1">
+            </span>
+            <span>
+                <hr id="progress2">
+            </span>
+        </div>
+
+    </header>
+    <div class="wrapper">
+        <div class="title">
+            <h1>Lets Answer a Few Question</h1>
+        </div>
+
+        <form method="get">
+            <div class="first-question">
+                <label>Child's Age:</label>
+                <div class="q-bar">
+                    <input type="number" name="age" required placeholder="Enter age" min="1" maxlength="2">
+                    <!-- use js to handle range restrict -->
+                    <select name="measurement" class="measurement">
+                        <option value="months">Months</option>
+                        <option value="years">Years</option>
+                    </select>
+                </div>
+                <br>
+                <label>Child's Gender:</label>
+                <div class="gender">
+                    <label class="gender-type" id="male">
+                        <input type="radio" name="gender" value="male" checked>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                            <path
+                                d="M289.8 46.8c3.7-9 12.5-14.8 22.2-14.8l112 0c13.3 0 24 10.7 24 24l0 112c0 9.7-5.8 18.5-14.8 22.2s-19.3 1.7-26.2-5.2l-33.4-33.4L321 204.2c19.5 28.4 31 62.7 31 99.8c0 97.2-78.8 176-176 176S0 401.2 0 304s78.8-176 176-176c37 0 71.4 11.4 99.8 31l52.6-52.6L295 73c-6.9-6.9-8.9-17.2-5.2-26.2zM400 80s0 0 0 0s0 0 0 0s0 0 0 0zM176 416a112 112 0 1 0 0-224 112 112 0 1 0 0 224z"
+                                fill="currentColor" />
+                        </svg>
+                        <!-- <div id="icon-container"></div> -->
+                        <p>Male</p>
+                    </label>
+                    <label class="gender-type" id="female">
+                        <input type="radio" name="gender" value="female">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                            <path
+                                d="M80 176a112 112 0 1 1 224 0A112 112 0 1 1 80 176zM224 349.1c81.9-15 144-86.8 144-173.1C368 78.8 289.2 0 192 0S16 78.8 16 176c0 86.3 62.1 158.1 144 173.1l0 34.9-32 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l32 0 0 32c0 17.7 14.3 32 32 32s32-14.3 32-32l0-32 32 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-32 0 0-34.9z"
+                                fill="currentColor" />
+                        </svg>
+                        <p>Female</p>
+                    </label>
+                </div>
+                <br>
+                <label>Child's Weight:</label>
+                <div class="q-bar">
+                    <input type="number" name="weight" required placeholder="Enter weight" min="1" maxlength="2">
+                    <!-- use js to handle range restrict -->
+                    <select name="weight-unit" class="measurement">
+                        <option value="kg">kg</option>
+                        <option value="lbs">lbs</option>
+                    </select>
+                </div>
+                <br>
+                <label>Child's Height:</label>
+                <div class="q-bar">
+                    <input type="number" name="height" required placeholder="Enter height" min="1" maxlength="2">
+                    <!-- use js to handle range restrict -->
+                    <select name="height-unit" class="measurement">
+                        <option value="cm">cm</option>
+                        <option value="ft">ft</option>
+                    </select>
+                </div>
+                <br>
+                <label>Child’s MUAC (Mid-Upper Arm Circumference):</label>
+                <div class="q-bar">
+                    <input type="number" name="muac" required placeholder="Enter MUAC" min="1" maxlength="2">
+                    <!-- use js to handle range restrict -->
+                    <select name="muac-unit" class="measurement">
+                        <option value="cm">cm</option>
+                        <option value="ft">ft</option>
+                    </select>
+                </div>
+                <a class="next-question" id="next-question" href="#second-question">
+                    <p>Next Question</p>
+                </a>
+
+
+            </div>
+            <div class="second-question" id="second-question">
+                <div class="title">
+                    <h1>Does your child have any of this Symptoms?</h1>
+                </div>
+                <div class="sub-title">
+                    <p>Hair</p>
+                    <hr>
+                </div>
+                <div class="symptoms-question">
+                    <p>1. Hair thinning</p>
+                    <div class="choices">
+                        <label id="yes-button">
+                            <input id="yes-radio" type="radio" name="hair-thinning" value="yes">
+                            <span>Yes</span>
+                        </label>
+                        <!-- <hr> -->
+                        <label>
+                            <input type="radio" name="hair-thinning" value="uncertain">
+                            <span>Uncertain</span>
+                        </label>
+                        <!-- <hr> -->
+                        <label id="no-button">
+                            <input type="radio" name="hair-thinning" value="no">
+                            <span>No</span>
+                        </label>
+                    </div>
+                </div>
+                <input type="submit" value="Submit Answer" class="submit-button">
+            </div>
+
+        </form>
+        <!-- <footer>-</footer> -->
+    </div>
+    <script src="myscript.js"></script>
+</body>
+
+</html>

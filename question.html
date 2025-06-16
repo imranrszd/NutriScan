@@ -35,6 +35,7 @@
                 <div class="q-bar">
                     <input type="number" name="age" required placeholder="Enter age" min="1" maxlength="2">
                     <!-- use js to handle range restrict -->
+                    <hr>
                     <select name="measurement" class="measurement">
                         <option value="months">Months</option>
                         <option value="years">Years</option>
@@ -68,6 +69,7 @@
                 <div class="q-bar">
                     <input type="number" name="weight" required placeholder="Enter weight" min="1" maxlength="2">
                     <!-- use js to handle range restrict -->
+                    <hr>
                     <select name="weight-unit" class="measurement">
                         <option value="kg">kg</option>
                         <option value="lbs">lbs</option>
@@ -78,6 +80,7 @@
                 <div class="q-bar">
                     <input type="number" name="height" required placeholder="Enter height" min="1" maxlength="2">
                     <!-- use js to handle range restrict -->
+                    <hr>
                     <select name="height-unit" class="measurement">
                         <option value="cm">cm</option>
                         <option value="ft">ft</option>
@@ -88,13 +91,18 @@
                 <div class="q-bar">
                     <input type="number" name="muac" required placeholder="Enter MUAC" min="1" maxlength="2">
                     <!-- use js to handle range restrict -->
+                    <hr>
                     <select name="muac-unit" class="measurement">
                         <option value="cm">cm</option>
                         <option value="ft">ft</option>
                     </select>
                 </div>
-                <a class="next-question" id="next-question" href="#second-question">
-                    <p>Next Question</p>
+                <br>
+                <br>
+                <a href="#second-question">
+                    <button type="button" disabled class="next-question" id="next-question">
+                        <p>Next Question</p>
+                    </button>
                 </a>
 
 
@@ -126,7 +134,7 @@
                         </label>
                     </div>
                 </div>
-                <input type="submit" value="Submit Answer" class="submit-button">
+                <input disabled type="submit" value="Submit Answer" class="submit-button" id="submit-button">
             </div>
 
         </form>

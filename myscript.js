@@ -1,9 +1,8 @@
 const progressBar2 = document.getElementById("progress2");
 
-
-
 const nextQuestion = document.getElementById("next-question");
 const secQuestion = document.getElementById("second-question");
+const submitButton = document.getElementById("submit-button");
 
 nextQuestion.addEventListener("click", function (event) {
     progressBar2.style.backgroundColor = "#24A850";
@@ -12,6 +11,20 @@ nextQuestion.addEventListener("click", function (event) {
 });
 
 const form = document.querySelector("form");
+
+form.addEventListener("input", function () {
+    nextQuestion.disabled = !form.checkValidity();
+});
+
+const radioInputs = document.querySelectorAll('input[type="radio"]');
+const radioNames = [...new Set([...radioInputs].map(r => r.name))];
+
+document.querySelector('form').addEventListener('change', function () {
+    const allAnswered = radioNames.every(name =>
+        document.querySelector(`input[name="${name}"]:checked`)
+    );
+    submitButton.disabled = !allAnswered;
+});
 
 form.addEventListener("submit", function (event) {
     event.preventDefault(); // Stop real submission

@@ -56,7 +56,7 @@ header span hr {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 60px;
     padding-top: 30px;
 }
 
@@ -64,26 +64,34 @@ header span hr {
     margin: 40px 0 2px 0;
 }
 
+label {
+    width: 100%;
+}
 
 form {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+    text-align: start;
 }
 
 .first-question {
     display: flex;
     flex-direction: column;
     margin: 0 100px;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
 }
 
 .second-question {
     display: none;
 
     flex-direction: column;
-    margin: 0 50px;
     text-align: center;
+    width: 100%;
+    max-width: 800px;
 }
 
 label {
@@ -100,6 +108,12 @@ label {
     padding: 10px;
     display: flex;
     justify-content: space-evenly;
+    width: 100%;
+}
+
+.q-bar hr {
+    width: 1px;
+    background-color: #24A850;
 }
 
 input::-webkit-outer-spin-button,
@@ -112,20 +126,22 @@ input[type="number"] {
     font-family: 'Poppins', sans-serif;
     flex: 7;
     border: 0px;
-    border-right: #24A850 solid 2px;
+    /* border-right: #24A850 solid 2px; */
     padding: 5px;
     box-sizing: border-box;
+
 }
 
 input[type="number"]:focus {
     outline: none;
     border: 0px;
-    border-right: #24A850 solid 2px;
+    /* border-right: #24A850 solid 2px; */
 }
 
 form select {
     cursor: pointer;
 }
+
 
 .measurement {
     flex: 1;
@@ -176,8 +192,26 @@ form select {
     color: #24A850;
 }
 
+a {
+    text-decoration: none;
+    padding: 0;
+}
+
+button {
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+}
+
+.next-question:disabled {
+    background-color: rgb(170, 170, 170);
+    color: #fff;
+    cursor: default;
+    /* margin: 50px auto; */
+}
+
 .next-question {
-    margin: 50px auto;
+    /* margin: 0 auto; */
     border-radius: 20px;
     background-color: #24A850;
     color: #ffffff;
@@ -188,6 +222,7 @@ form select {
     cursor: pointer;
     text-decoration: none;
 }
+
 
 #icon {
     color: blue;
@@ -266,6 +301,12 @@ input[type="radio"] {
     background-color: #24A850;
     color: #ffffff;
     font-weight: 600;
+}
+
+input[type=submit]:disabled {
+    background-color: rgb(170, 170, 170);
+    color: #fff;
+    cursor: default;
 }
 
 input[type=submit] {

@@ -104,6 +104,7 @@ label {
     margin-top: 15px;
     background-color: #ffffff;
     border-radius: 10px;
+    border: #24A850 solid 2px;
     color: white;
     padding: 10px;
     display: flex;
@@ -114,6 +115,22 @@ label {
 .q-bar hr {
     width: 1px;
     background-color: #24A850;
+}
+
+#height-label {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+}
+
+#height-label p {
+    margin: 0;
+}
+
+#height-label span,
+#height-label p:nth-child(2) {
+    font-weight: 500;
+    font-size: 14px;
 }
 
 input::-webkit-outer-spin-button,
@@ -253,8 +270,16 @@ button {
     font-size: 18px;
     font-weight: 600;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.radio-question {
+    display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
 }
 
 .choices {
@@ -285,14 +310,17 @@ input[type="radio"] {
     font-weight: 600;
 }
 
+.choices hr {
+    width: 1px;
+    border: #24A850 solid 1px;
+}
+
 #yes-button {
-    border-right: #24A850 solid 2px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
 }
 
 #no-button {
-    border-left: #24A850 solid 2px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
 }

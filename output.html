@@ -16,23 +16,53 @@
         </a>
     </header>
     <div class="wrapper">
-        <h1 class="title">Assessment Results</h1>
-        <div class="results">
-            <span id="confidence">
-                <p>90%</p>
-            </span>
-            <span id="text-results">Your assessment results will be shown here.</span>
+        <h1 class=" title">Assessment Results</h1>
+        <div class="diagnosis">
+            <div>
+                <div class="results">
+                    <div class="left-side">
+                        <p>Confidence</p>
+                        <br>
+                        <p style="align-self: end;">High</p>
+                    </div>
+                    <span id="confidence">
+                        <p>90%</p>
+                    </span>
+                    <!-- <span id="text-results">Your assessment results will be shown here.</span> -->
+                </div>
+                <div class="results" id="recommendation">
+                    <p style="font-weight: 400;">Recommendation</p>
+                    <p>Recommendation</p>
+                </div>
+            </div>
+            <div class="results" id="nutrition-status">
+                <div>
+                    <p>Nutrition Status</p>
+                    <h3>STAT</h3>
+                    <div class="nutri-level"></div>
+                </div>
+                <hr>
+                <div>
+                    <p>Type</p>
+                    <h3>STAT</h3>
+                    <div class="type-level"></div>
+                </div>
+            </div>
         </div>
+        <a href="index.html">
+            <div class="redo-assess">
+                <p>Redo Assessment</p>
+            </div>
+        </a>
     </div>
-
     <script>
-        // const results = JSON.parse(localStorage.getItem('result'));
-        // if (results) {
-        //     document.getElementById('confidence').innerHTML = `<p>${results.confidence}%</p>`;
-        //     document.getElementById('text-results').innerHTML = `<p>${results.type}</p>`;
-        // } else {
-        //     document.getElementById('text-results').innerHTML = `<p>No results found. Please complete the assessment.</p>`;
-        // }
+        const results = localStorage.getItem('result');
+        if (results) {
+            // document.getElementById('confidence').innerHTML = `<p>${results.confidence}%</p>`;
+            document.getElementById('text-results').innerHTML = `<p>${results}</p>`;
+        } else {
+            document.getElementById('text-results').innerHTML = `<p>No results found. Please complete the assessment.</p>`;
+        }
     </script>
 </body>
 

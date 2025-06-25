@@ -31,6 +31,9 @@
 
         <form method="get">
             <div class="first-question">
+                <!-- <input type="range" id="slider" min="1" max="3" step="1" value="1"
+                    oninput="output.value = slider.value">
+                <output id="output">1</output> -->
                 <label>Child's Age:</label>
                 <div class="q-bar">
                     <input type="number" name="age" required placeholder="Enter age" min="1" maxlength="2">
@@ -76,12 +79,19 @@
                     </select>
                 </div>
                 <br>
-                <label>Child's Height:</label>
+                <label id="height-label">
+                    <p>Child's Height:</p>
+                    <p>Minimum height:
+                        <span>45cm</span>
+                        <!-- <span>1'4"</span> -->
+                    </p>
+
+                </label>
                 <div class="q-bar">
-                    <input type="number" name="height" required placeholder="Enter height" min="1" maxlength="2">
+                    <input type="number" name="height" required placeholder="Enter height" id="height">
                     <!-- use js to handle range restrict -->
                     <hr>
-                    <select name="height-unit" class="measurement">
+                    <select name="height-unit" class="measurement" id="height-radio">
                         <option value="cm">cm</option>
                         <option value="ft">ft</option>
                     </select>
@@ -100,47 +110,76 @@
                 <br>
                 <br>
                 <a href="#second-question">
-                    <button type="button" disabled class="next-question" id="next-question">
+                    <button type="button" class="next-question" id="next-question">
                         <p>Next Question</p>
                     </button>
                 </a>
-
-
             </div>
             <div class="second-question" id="second-question">
+                <hr>
+                <hr>
                 <div class="title">
-                    <h1>Does your child have any of this Symptoms?</h1>
+                    <h1>Does your child have any of this <u>Symptoms</u>?</h1>
                 </div>
+                <hr>
+                <!-- Hair Section -->
                 <div class="sub-title">
                     <p>Hair</p>
                     <hr>
                 </div>
-                <div class="symptoms-question">
-                    <p>1. Hair thinning</p>
-                    <div class="choices">
-                        <label id="yes-button">
-                            <input id="yes-radio" type="radio" name="hair-thinning" value="yes">
-                            <span>Yes</span>
-                        </label>
-                        <!-- <hr> -->
-                        <label>
-                            <input type="radio" name="hair-thinning" value="uncertain">
-                            <span>Uncertain</span>
-                        </label>
-                        <!-- <hr> -->
-                        <label id="no-button">
-                            <input type="radio" name="hair-thinning" value="no">
-                            <span>No</span>
-                        </label>
-                    </div>
+                <div class="hair-question" id="hair-question">
                 </div>
+                <hr>
+                <hr>
+                <!-- Skin Section -->
+                <div class="sub-title">
+                    <p>Skin</p>
+                    <hr>
+                </div>
+                <div class="skin-question" id="skin-question">
+                </div>
+                <hr>
+                <hr>
+                <!-- Body Section -->
+                <div class="sub-title">
+                    <p>Body</p>
+                    <hr>
+                </div>
+                <div class="hair-question" id="body-question">
+                </div>
+                <hr>
+                <hr>
+                <!-- Behavior Section -->
+                <div class="sub-title">
+                    <p>Behavior</p>
+                    <hr>
+                </div>
+                <div class="hair-question" id="behavior-question">
+                </div>
+                <hr>
+                <hr>
+                <!-- Health Section -->
+                <div class="sub-title">
+                    <p>Health</p>
+                    <hr>
+                </div>
+                <div class="hair-question" id="health-question">
+                </div>
+                <hr>
+                <hr>
+                <hr>
                 <input disabled type="submit" value="Submit Answer" class="submit-button" id="submit-button">
+                <hr>
+                <hr>
+                <hr>
+                <hr>
             </div>
 
         </form>
         <!-- <footer>-</footer> -->
     </div>
-    <script src="myscript.js"></script>
+    <script type="module" src="myscript.js"></script>
+    <script type="module" src="lms.js"></script>
 </body>
 
 </html>

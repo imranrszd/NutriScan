@@ -103,6 +103,30 @@ header p {
     min-width: 200px;
 }
 
+.conf-level-container {
+    display: flex;
+}
+
+.conf-level,
+.type-level {
+    border: #fff 1px solid;
+    background-color: #fff;
+    height: 10px;
+    width: 10px;
+    max-width: 10px;
+    margin: 0 5px;
+    border-radius: 50%;
+}
+
+.type-level {
+    border: var(--main-color) 1px solid;
+    background-color: var(--main-color);
+    margin: 10px 0;
+    height: 15px;
+    max-width: 15px;
+    width: 15px;
+}
+
 .confidence h3 {
     margin: 0;
     display: flex;
@@ -134,7 +158,17 @@ header p {
 .slider-labels {
     display: flex;
     justify-content: space-between;
-    width: 102%;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.slider-labels span,
+.indicator span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    text-align: center;
 }
 
 .slider-container .indicator {
@@ -142,7 +176,7 @@ header p {
     justify-content: space-between;
     margin-bottom: 4px;
     padding: 0 4px;
-    width: 99%;
+    width: 100%;
 }
 
 .slider-container .indicator hr {
@@ -150,6 +184,7 @@ header p {
     height: 10px;
     background-color: var(--main-color);
     border: none;
+    margin-bottom: 10px;
 }
 
 #second-layer {

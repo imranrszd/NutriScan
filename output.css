@@ -1,5 +1,6 @@
 :root {
     --main-color: #24A850;
+    --secondary-color: #B4FFCD;
 }
 
 body {
@@ -101,6 +102,7 @@ header p {
     padding-bottom: 10px;
     max-width: 250px;
     min-width: 200px;
+    height: 80px;
 }
 
 .conf-level-container {
@@ -109,7 +111,7 @@ header p {
 
 .conf-level,
 .type-level {
-    border: #fff 1px solid;
+    border: #fff 2px solid;
     background-color: #fff;
     height: 10px;
     width: 10px;
@@ -119,12 +121,12 @@ header p {
 }
 
 .type-level {
-    border: var(--main-color) 1px solid;
+    border: var(--main-color) 3px solid;
     background-color: var(--main-color);
     margin: 10px 0;
-    height: 15px;
-    max-width: 15px;
-    width: 15px;
+    height: 10px;
+    max-width: 10px;
+    width: 10px;
 }
 
 .confidence h3 {
@@ -265,7 +267,7 @@ header p {
 }
 
 .source-item {
-    background-color: #B4FFCD;
+    background-color: var(--secondary-color);
     color: var(--main-color);
     padding: 5px 10px;
     border-radius: 10px;

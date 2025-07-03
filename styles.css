@@ -20,6 +20,11 @@ header {
 header p {
     color: #24A850;
     margin: 20px 50px;
+    cursor: pointer;
+}
+
+header a p:hover {
+    text-decoration: underline;
 }
 
 header>p {
@@ -72,6 +77,7 @@ a {
     text-decoration: none;
     display: flex;
     justify-content: center;
+    cursor: default;
 }
 
 .start-button {

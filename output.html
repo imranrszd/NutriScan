@@ -29,7 +29,6 @@
                         <div class="left-side">
                             <p>Confidence</p>
                             <div class="conf-level-container">
-                                <div class="conf-level" id="healthy-level"></div>
                                 <div class="conf-level" id="low-level"></div>
                                 <div class="conf-level" id="medium-level"></div>
                                 <div class="conf-level" id="high-level"></div>
@@ -70,10 +69,9 @@
                             <div>
                                 <p>Confidence</p>
                                 <div class="conf-level-container">
-                                    <div class="conf-level" id="healthy-level"></div>
-                                    <div class="conf-level" id="low-level"></div>
-                                    <div class="conf-level" id="medium-level"></div>
-                                    <div class="conf-level" id="high-level"></div>
+                                    <div class="conf-level" id="type-conf-low-level"></div>
+                                    <div class="conf-level" id="type-conf-medium-level"></div>
+                                    <div class="conf-level" id="type-conf-high-level"></div>
                                 </div>
                             </div>
                             <h3 id="type-confidence">High</h3>
@@ -81,10 +79,10 @@
                     </div>
                     <div class="right-side">
                         <div class="type-level-container">
-                            <div class="type-level" id="type-healthy-level"></div>
-                            <div class="type-level" id="type-low-level"></div>
-                            <div class="type-level" id="type-medium-level"></div>
-                            <div class="type-level" id="type-high-level"></div>
+                            <div class="type-level" id="type-high"></div>
+                            <div class="type-level" id="type-medium"></div>
+                            <div class="type-level" id="type-low"></div>
+                            <div class="type-level" id="type-healthy"></div>
                         </div>
                     </div>
                 </div>
@@ -155,20 +153,60 @@
             }
 
             if (stored) {
-                const status = result.Status;
-
                 const root = document.documentElement;
                 console.log("Status:", status);
 
-                switch (status) {
+                switch (result.Status) {
                     case "Healthy":
                         root.style.setProperty("--main-color", "#4CAF50"); // green
+                        root.style.setProperty("--secondary-color", "#B4FFCD"); // green
                         break;
                     case "Moderate Acute Malnutrition (MAM)":
-                        root.style.setProperty("--main-color", "#FFC107"); // yellow
+                        root.style.setProperty("--main-color", "#9FA824"); // yellow
+                        root.style.setProperty("--secondary-color", "#FBFFC2"); // yellow
                         break;
                     case "Severe Acute Malnutrition (SAM)":
                         root.style.setProperty("--main-color", "#A82424"); // red
+                        root.style.setProperty("--secondary-color", "#FFD0D0"); // red
+                        break;
+                    default:
+                        root.style.setProperty("--main-color", "gray"); // fallback
+                }
+
+                figureLevel(result.Confidence, "low-level", "medium-level", "high-level");
+                figureLevel(result.TypeConfidence, "type-conf-low-level", "type-conf-medium-level", "type-conf-high-level");
+
+                function figureLevel(source, id1, id2, id3) {
+                    switch (source) {
+                        case "Low":
+                            document.getElementById(id1).style.background = "transparent";
+                            break;
+                        case "N/A":
+                            document.getElementById(id1).style.background = "transparent";
+                            break;
+                        case "Medium":
+                            document.getElementById(id2).style.background = "transparent";
+                            break;
+                        case "High":
+                            document.getElementById(id3).style.background = "transparent";
+                            break;
+                        default:
+                            root.style.setProperty("--main-color", "gray"); // fallback
+                    }
+                }
+                console.log("Type:", result.Type);
+                switch (result.Type) {
+                    case "None":
+                        document.getElementById("type-healthy").style.background = "transparent";
+                        break;
+                    case "Kwashiorkor":
+                        document.getElementById("type-low").style.background = "transparent";
+                        break;
+                    case "Marasmus":
+                        document.getElementById("type-medium").style.background = "transparent";
+                        break;
+                    case "Marasmic-Kwashiorkor":
+                        document.getElementById("type-high").style.background = "transparent";
                         break;
                     default:
                         root.style.setProperty("--main-color", "gray"); // fallback

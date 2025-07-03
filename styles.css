@@ -83,11 +83,11 @@ a {
     font-size: 1.1em;
     font-weight: 500;
     cursor: pointer;
-    transition: 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease;
 }
 
 .start-button:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
     /* box-shadow: 0 4px 8px rgb(255, 255, 255); */
 
 }

@@ -28,87 +28,102 @@
         <div class="title">
             <h1>Lets Answer a Few Question</h1>
         </div>
-
+        <hr>
+        <br><br>
         <form method="get">
             <div class="first-question">
-                <!-- <input type="range" id="slider" min="1" max="3" step="1" value="1"
-                    oninput="output.value = slider.value">
-                <output id="output">1</output> -->
-                <label>Child's Age:</label>
-                <div class="q-bar">
-                    <input type="number" name="age" required placeholder="Enter age" min="1" maxlength="2">
-                    <!-- use js to handle range restrict -->
-                    <hr>
-                    <select name="measurement" class="measurement">
-                        <option value="months">Months</option>
-                        <option value="years">Years</option>
-                    </select>
+                <div class="age-range">
+                    <div class="top-side">
+                        <label>Child's Age:</label>
+                        <div>
+                            <output id="output" style="width: 20px; text-align: center; font-weight: 600;">1</output>
+                            <hr>
+                            <select id="age-label" name="age" class="measurement">
+                                <option value="month">Month</option>
+                                <option value="years">Years</option>
+                            </select>
+                        </div>
+                    </div>
+                    <input type="range" id="slider" min="1" max="6" step="1" value="1"
+                        oninput="output.value = slider.value">
+                    <div id="indicator">
+                    </div>
                 </div>
                 <br>
-                <label>Child's Gender:</label>
-                <div class="gender">
-                    <label class="gender-type" id="male">
-                        <input type="radio" name="gender" value="male" checked>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                            <path
-                                d="M289.8 46.8c3.7-9 12.5-14.8 22.2-14.8l112 0c13.3 0 24 10.7 24 24l0 112c0 9.7-5.8 18.5-14.8 22.2s-19.3 1.7-26.2-5.2l-33.4-33.4L321 204.2c19.5 28.4 31 62.7 31 99.8c0 97.2-78.8 176-176 176S0 401.2 0 304s78.8-176 176-176c37 0 71.4 11.4 99.8 31l52.6-52.6L295 73c-6.9-6.9-8.9-17.2-5.2-26.2zM400 80s0 0 0 0s0 0 0 0s0 0 0 0zM176 416a112 112 0 1 0 0-224 112 112 0 1 0 0 224z"
-                                fill="currentColor" />
-                        </svg>
-                        <!-- <div id="icon-container"></div> -->
-                        <p>Male</p>
-                    </label>
-                    <label class="gender-type" id="female">
-                        <input type="radio" name="gender" value="female">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-                            <path
-                                d="M80 176a112 112 0 1 1 224 0A112 112 0 1 1 80 176zM224 349.1c81.9-15 144-86.8 144-173.1C368 78.8 289.2 0 192 0S16 78.8 16 176c0 86.3 62.1 158.1 144 173.1l0 34.9-32 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l32 0 0 32c0 17.7 14.3 32 32 32s32-14.3 32-32l0-32 32 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-32 0 0-34.9z"
-                                fill="currentColor" />
-                        </svg>
-                        <p>Female</p>
-                    </label>
-                </div>
                 <br>
-                <label>Child's Weight:</label>
-                <div class="q-bar">
-                    <input type="number" name="weight" required placeholder="Enter weight" min="1" maxlength="2">
-                    <!-- use js to handle range restrict -->
-                    <hr>
-                    <select name="weight-unit" class="measurement">
-                        <option value="kg">kg</option>
-                        <option value="lbs">lbs</option>
-                    </select>
-                </div>
-                <br>
-                <label id="height-label">
-                    <p>Child's Height:</p>
-                    <p>Minimum height:
-                        <span>45cm</span>
-                        <!-- <span>1'4"</span> -->
-                    </p>
+                <div class="sub-first">
+                    <div class="left-side">
+                        <label>Child's Weight:</label>
+                        <div class="q-bar">
+                            <input type="number" name="weight" required placeholder="Enter weight" min="1"
+                                maxlength="2">
+                            <!-- use js to handle range restrict -->
+                            <hr>
+                            <select name="weight-unit" class="measurement">
+                                <option value="kg">kg</option>
+                                <option value="lbs">lbs</option>
+                            </select>
+                        </div>
+                        <br>
+                        <label id="height-label">
+                            <p>Child's Height:</p>
+                            <p>Minimum height:
+                                <span id="height-display">45 cm</span>
+                                <!-- <span>1'4"</span> -->
+                            </p>
 
-                </label>
-                <div class="q-bar">
-                    <input type="number" name="height" required placeholder="Enter height" id="height">
-                    <!-- use js to handle range restrict -->
-                    <hr>
-                    <select name="height-unit" class="measurement" id="height-radio">
-                        <option value="cm">cm</option>
-                        <option value="ft">ft</option>
-                    </select>
+                        </label>
+                        <div class="q-bar">
+                            <input type="number" name="height" step="any" required placeholder="Enter height">
+                            <!-- use js to handle range restrict -->
+                            <hr>
+                            <select name="height-unit" class="measurement">
+                                <option value="cm">cm</option>
+                                <option value="inch">inch</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="right-side">
+                        <label for="slider">Child's Gender:</label>
+                        <div class="gender">
+                            <label class="gender-type" id="male">
+                                <input type="radio" name="gender" value="male" checked>
+                                <svg id="male-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                    <path
+                                        d="M289.8 46.8c3.7-9 12.5-14.8 22.2-14.8l112 0c13.3 0 24 10.7 24 24l0 112c0 9.7-5.8 18.5-14.8 22.2s-19.3 1.7-26.2-5.2l-33.4-33.4L321 204.2c19.5 28.4 31 62.7 31 99.8c0 97.2-78.8 176-176 176S0 401.2 0 304s78.8-176 176-176c37 0 71.4 11.4 99.8 31l52.6-52.6L295 73c-6.9-6.9-8.9-17.2-5.2-26.2zM400 80s0 0 0 0s0 0 0 0s0 0 0 0zM176 416a112 112 0 1 0 0-224 112 112 0 1 0 0 224z"
+                                        fill="currentColor" />
+                                </svg>
+                                <!-- <div id="icon-container"></div> -->
+                                <p>Male</p>
+                            </label>
+                            <label class="gender-type" id="female">
+                                <input type="radio" name="gender" value="female">
+                                <svg id="female-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                                    <path
+                                        d="M80 176a112 112 0 1 1 224 0A112 112 0 1 1 80 176zM224 349.1c81.9-15 144-86.8 144-173.1C368 78.8 289.2 0 192 0S16 78.8 16 176c0 86.3 62.1 158.1 144 173.1l0 34.9-32 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l32 0 0 32c0 17.7 14.3 32 32 32s32-14.3 32-32l0-32 32 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-32 0 0-34.9z"
+                                        fill="currentColor" />
+                                </svg>
+                                <p>Female</p>
+                            </label>
+                        </div>
+                        <br>
+                        <label>Child’s MUAC (Mid-Upper Arm Circumference):</label>
+                        <div class="q-bar">
+                            <input type="number" name="muac" min="0" step="any" required placeholder="Enter MUAC"
+                                min="1" maxlength="2">
+                            <!-- use js to handle range restrict -->
+                            <hr>
+                            <select name="muac-unit" class="measurement">
+                                <option value="cm">cm</option>
+                                <option value="inch">inch</option>
+                            </select>
+                        </div>
+                    </div>
+
                 </div>
                 <br>
-                <label>Child’s MUAC (Mid-Upper Arm Circumference):</label>
-                <div class="q-bar">
-                    <input type="number" name="muac" required placeholder="Enter MUAC" min="1" maxlength="2">
-                    <!-- use js to handle range restrict -->
-                    <hr>
-                    <select name="muac-unit" class="measurement">
-                        <option value="cm">cm</option>
-                        <option value="ft">ft</option>
-                    </select>
-                </div>
-                <br>
-                <br>
+                <br><br>
                 <a href="#second-question">
                     <button type="button" class="next-question" id="next-question">
                         <p>Next Question</p>
@@ -116,63 +131,61 @@
                 </a>
             </div>
             <div class="second-question" id="second-question">
-                <hr>
+                <br><br><br>
                 <hr>
                 <div class="title">
-                    <h1>Does your child have any of this <u>Symptoms</u>?</h1>
+                    <h1>Choose the Symptoms that your child have</h1>
                 </div>
                 <hr>
+                <br><br><br>
                 <!-- Hair Section -->
-                <div class="sub-title">
-                    <p>Hair</p>
-                    <hr>
+                <div class="question">
+                    <div class="sub-title">
+                        <p>Hair</p>
+                        <hr>
+                    </div>
+                    <div class="diagnosis-question" id="hair-question">
+                    </div>
+                    <br>
+                    <br>
+                    <!-- Skin Section -->
+                    <div class="sub-title">
+                        <p>Skin</p>
+                        <hr>
+                    </div>
+                    <div class="diagnosis-question" id="skin-question">
+                    </div>
+                    <br>
+                    <br>
+                    <!-- Body Section -->
+                    <div class="sub-title">
+                        <p>Body</p>
+                        <hr>
+                    </div>
+                    <div class="diagnosis-question" id="body-question">
+                    </div>
+                    <br>
+                    <br>
+                    <!-- Behavior Section -->
+                    <div class="sub-title">
+                        <p>Behavior</p>
+                        <hr>
+                    </div>
+                    <div class="diagnosis-question" id="behavior-question">
+                    </div>
+                    <br>
+                    <br>
+                    <!-- Health Section -->
+                    <div class="sub-title">
+                        <p>Health</p>
+                        <hr>
+                    </div>
+                    <div class="diagnosis-question" id="health-question">
+                    </div>
                 </div>
-                <div class="hair-question" id="hair-question">
-                </div>
-                <hr>
-                <hr>
-                <!-- Skin Section -->
-                <div class="sub-title">
-                    <p>Skin</p>
-                    <hr>
-                </div>
-                <div class="skin-question" id="skin-question">
-                </div>
-                <hr>
-                <hr>
-                <!-- Body Section -->
-                <div class="sub-title">
-                    <p>Body</p>
-                    <hr>
-                </div>
-                <div class="hair-question" id="body-question">
-                </div>
-                <hr>
-                <hr>
-                <!-- Behavior Section -->
-                <div class="sub-title">
-                    <p>Behavior</p>
-                    <hr>
-                </div>
-                <div class="hair-question" id="behavior-question">
-                </div>
-                <hr>
-                <hr>
-                <!-- Health Section -->
-                <div class="sub-title">
-                    <p>Health</p>
-                    <hr>
-                </div>
-                <div class="hair-question" id="health-question">
-                </div>
-                <hr>
-                <hr>
-                <hr>
+                <br>
+                <br>
                 <input disabled type="submit" value="Submit Answer" class="submit-button" id="submit-button">
-                <hr>
-                <hr>
-                <hr>
-                <hr>
             </div>
 
         </form>

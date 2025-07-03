@@ -16,54 +16,147 @@
         </a>
     </header>
     <div class="wrapper">
-        <h1 class=" title">Assessment Results</h1>
-        <div class="diagnosis">
-            <div>
-                <div class="results">
-                    <div class="left-side">
-                        <p>Confidence</p>
-                        <br>
-                        <p style="align-self: end;">High</p>
+        <div class="sub-wrapper">
+            <h1 class=" title">Assessment Results</h1>
+            <hr>
+            <div class="results" id="nutrition-status">
+                <div class="nutritional-stat">
+                    <div class="status">
+                        <p>Nutritional Status</p>
+                        <h3 class="title" style="margin: 0;" id="status">SAM (Severe Acute Malnutrition)</h3>
                     </div>
-                    <span id="confidence">
-                        <p>90%</p>
-                    </span>
-                    <!-- <span id="text-results">Your assessment results will be shown here.</span> -->
+                    <div class="confidence">
+                        <div class="left-side">
+                            <p>Confidence</p>
+                            a a a a
+                        </div>
+                        <h3 id="confidence">High</h3>
+                    </div>
                 </div>
-                <div class="results" id="recommendation">
-                    <p style="font-weight: 400;">Recommendation</p>
-                    <p>Recommendation</p>
+                <div class="slider-container">
+                    <div class="indicator">
+                        <hr>
+                        <hr>
+                        <hr>
+                    </div>
+                    <hr>
+                    <div class="slider-labels">
+                        <span>HEALTHY</span>
+                        <span>MAM</span>
+                        <span>SAM</span>
+                    </div>
                 </div>
             </div>
-            <div class="results" id="nutrition-status">
-                <div>
-                    <p>Nutrition Status</p>
-                    <h3>STAT</h3>
-                    <div class="nutri-level"></div>
+            <hr>
+            <div class="results" id="second-layer">
+                <div class="type">
+                    <div class="left-side">
+                        <p>Type</p>
+                        <h3 class="title" id="type">Kwashiorkor</h3>
+                        <br>
+                        <div class="confidence">
+                            <div>
+                                <p>Confidence</p>
+                                a a a a
+                            </div>
+                            <h3 id="type-confidence">High</h3>
+                        </div>
+                    </div>
+                    <div class="right-side">
+                        <div>a</div>
+                        <div>a</div>
+                        <div>a</div>
+                        <div>a</div>
+                    </div>
                 </div>
                 <hr>
-                <div>
-                    <p>Type</p>
-                    <h3>STAT</h3>
-                    <div class="type-level"></div>
+                <div class="note">
+                    <div>
+                        <p>Note</p>
+                        <p class="actual-note" id="note">You should do this..</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <a href="index.html">
-            <div class="redo-assess">
-                <p>Redo Assessment</p>
+            <hr>
+            <br>
+            <div class="source-result">
+                <p>Source of Result </p>
+                <div class="source" id="source">-</div>
+                <p>Related Symptoms</p>
+                <div class="symptoms" id="symptoms">-</div>
             </div>
-        </a>
-    </div>
-    <script>
-        const results = localStorage.getItem('result');
-        if (results) {
-            // document.getElementById('confidence').innerHTML = `<p>${results.confidence}%</p>`;
-            document.getElementById('text-results').innerHTML = `<p>${results}</p>`;
-        } else {
-            document.getElementById('text-results').innerHTML = `<p>No results found. Please complete the assessment.</p>`;
-        }
-    </script>
+            <br><br>
+            <hr>
+            <br><br><br>
+            <a href="index.html">
+                <div class="redo-assess">
+                    <p>Back to Home</p>
+                </div>
+            </a>
+        </div>
+        <script>
+            const stored = localStorage.getItem("result");
+            console.log(stored)
+            var result;
+
+            if (stored) {
+                result = JSON.parse(stored); // Convert string back to object
+                console.log("Status:", status); // "Normal" or whatever it was
+            } else {
+                console.log("No result found in localStorage.");
+            }
+
+            if (result) {
+                document.getElementById("status").innerHTML = `<span>${result.Status}</span>`
+                document.getElementById("confidence").innerHTML = `<span>${result.Confidence}</span>`
+                document.getElementById("type").innerHTML = `<span>${result.Type}</span>`
+                document.getElementById("type-confidence").innerHTML = `<span>${result.TypeConfidence}</span>`
+                document.getElementById("note").innerHTML = `<span>${result.Note}</span>`
+            }
+            if (result.Source && result.Source.length > 0) {
+                const sourceID = document.getElementById('source');
+                sourceID.innerHTML =
+                    `<div class="source-list">
+                    ${result.Source.map(item => `<div class="source-item">${item}</div>`).join(' ')}
+                </div> 
+                    ` ;
+            } else {
+                document.querySelector('.source').innerHTML = '<span>No source available</span>';
+            }
+
+            if (result.SymptomSource && result.SymptomSource.length > 0) {
+                const symptomsID = document.getElementById('symptoms');
+                symptomsID.innerHTML =
+                    `<div class="source-list">
+                    ${result.SymptomSource.map(item => `<div class="source-item">${item}</div>`).join(' ')}
+                </div> 
+                    ` ;
+            } else {
+                document.querySelector('.symptoms').innerHTML = '<span>No related symptoms available</span>';
+            }
+
+            if (stored) {
+                const status = result.Status;
+
+                const root = document.documentElement;
+                console.log("Status:", status);
+
+                switch (status) {
+                    case "Healthy":
+                        root.style.setProperty("--main-color", "#4CAF50"); // green
+                        break;
+                    case "Moderate Acute Malnutrition (MAM)":
+                        root.style.setProperty("--main-color", "#FFC107"); // yellow
+                        break;
+                    case "Severe Acute Malnutrition (SAM)":
+                        root.style.setProperty("--main-color", "#A82424"); // red
+                        break;
+                    default:
+                        root.style.setProperty("--main-color", "gray"); // fallback
+                }
+            }
+
+        </script>
 </body>
 
 </html>

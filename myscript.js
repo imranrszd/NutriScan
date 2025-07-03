@@ -1,5 +1,66 @@
 import LMS from './lms.js';
 
+// run once the page is fully loaded
+document.addEventListener("DOMContentLoaded", function () {
+    adjustAgeLabel(ageLabelRadio, lineIndicator);
+    nextQuestion.disabled = !form.checkValidity();
+    maleIcon.style.color = 'white';
+});
+
+const ageLabelRadio = document.getElementById("age-label"); // This is probably a radio input
+const lineIndicator = document.getElementById("indicator");
+const slider = document.getElementById("slider");
+const output = document.getElementById("output");
+
+// adjustAgeLabel(ageLabelRadio, lineIndicator);
+
+ageLabelRadio.addEventListener("change", function () {
+    adjustAgeLabel(ageLabelRadio, lineIndicator);
+    slider.value = slider.min
+    output.value = slider.value;
+});
+
+function adjustAgeLabel(ageLabel, line) {
+    let count;
+    slider.min = 1;
+
+    // Use .value if ageLabel is an <input> element
+    if (ageLabel.value == "month") {
+        count = 12;
+        slider.max = 12;
+    } else if (ageLabel.value == "years") {
+        count = 5;
+        slider.max = 5;
+    } else {
+        count = 0;
+    }
+
+    // Clear previous lines
+    line.innerHTML = "";
+
+    // Append <hr> elements
+    for (let i = 0; i < count; i++) {
+        const hr = document.createElement('hr');
+        line.appendChild(hr);
+    }
+}
+
+const maleIcon = document.getElementById('male-icon');
+const femaleIcon = document.getElementById('female-icon');
+const genderRadio = document.querySelectorAll('input[name="gender"]');
+
+genderRadio.forEach(radio => {
+    radio.addEventListener("click", function () {
+        if (this.value === "male") {
+            maleIcon.style.color = "white";
+            femaleIcon.style.color = "#24A850"; // reset
+        } else if (this.value === "female") {
+            femaleIcon.style.color = "white";
+            maleIcon.style.color = "#24A850"; // reset
+        }
+    });
+});
+
 const headQuestion = [
     { id: '1', text: 'Hair Sparse' },
     { id: '2', text: 'Hair Color Change' },
@@ -55,32 +116,103 @@ function createQuestionSection(questions, sectionId) {
     });
 }
 
-const heightInput = document.getElementById("height");
-const heightRadio = document.getElementById("height-radio");
+const weightInput = document.querySelector('input[name="weight"]');
+const weightUnit = document.querySelector('select[name="weight-unit"]');
+
+weightUnit.addEventListener("change", function () {
+    changeWeightUnit(weightInput, weightUnit)
+});
+
+function changeWeightUnit(input, unit) {
+    let value = parseFloat(input.value);
+
+    // Do nothing if no valid value yet
+    if (isNaN(value)) return;
+
+    if (unit.value === "lbs") {
+        // Convert kg → lbs
+        input.value = (value * 2.20462).toFixed(1);
+    } else if (unit.value === "kg") {
+        // Convert lbs → kg
+        input.value = (value / 2.20462).toFixed(1);
+    }
+
+}
+
+const heightInput = document.querySelector('input[name="height"]');
+const heightUnit = document.querySelector('select[name="height-unit"]');
+
+const muacInput = document.querySelector('input[name="muac"]');
+const muacUnit = document.querySelector('select[name="muac-unit"]');
+
+heightUnit.addEventListener("input", function (event) {
+    heightValue = parseFloat(event.target.value) || 0;
+});
+
 var heightValue;
 
-heightInput.addEventListener("input", function (event) {
-    heightValue = parseFloat(event.target.value) || 0;
+// heightInput.addEventListener("input", function (event) {
+//     heightValue = parseFloat(event.target.value) || 0;
+// });
+
+const span = document.getElementById('height-display');
+
+heightUnit.addEventListener("change", function () {
+    changeHeightUnit(heightInput, heightUnit);
+    validateForm(); // manually re-validate
+    if (heightUnit.value === 'cm') {
+        console.log('cm');
+        span.textContent = '45 cm';
+    } else if (heightUnit.value === 'inch') {
+        console.log('inch');
+        span.textContent = '17.8 inch';
+    }
 });
 
-heightRadio.addEventListener("input", function (event) {
-    heightValue = parseFloat(event.target.value) || 0;
+muacUnit.addEventListener("change", function () {
+    changeHeightUnit(muacInput, muacUnit);
+    validateForm(); // manually re-validate
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    // This runs once when the DOM is fully loaded and parsed.
-    nextQuestion.disabled = !form.checkValidity();
-    // Do your initialization here: add event listeners, fetch data, etc.
-});
+// var height;
+
+function changeHeightUnit(input, unit) {
+    let value = parseFloat(input.value);
+
+    if (isNaN(value)) return;
+
+    if (unit.value === "inch") {
+        input.value = (value / 2.54).toFixed(2);
+    } else if (unit.value === "cm") {
+        input.value = (value * 2.54).toFixed(1);
+    }
+}
+
+let isHeightValid = false;
 
 // Enable next button only when all inputs are answered
 const form = document.querySelector("form");
+form.addEventListener("input", validateForm);
 
-form.addEventListener("input", function () {
+function validateForm() {
     const isFormValid = form.checkValidity();
-    const isHeightValid = heightValue >= 45 && heightValue <= 110;
+    heightValue = parseFloat(heightInput.value);
+
+    if (!isNaN(heightValue)) {
+        if (heightUnit.value === "cm") {
+            isHeightValid = heightValue >= 45 && heightValue <= 110;
+        } else if (heightUnit.value === "inch") {
+            isHeightValid = heightValue >= 17.72 && heightValue <= 43.31;
+        }
+    } else {
+        isHeightValid = false;
+    }
+
     nextQuestion.disabled = !(isFormValid && isHeightValid);
-});
+}
+
+
+
 
 // Scroll to the second question
 const nextQuestion = document.getElementById("next-question");
@@ -110,8 +242,8 @@ form.addEventListener("submit", function (event) {
     event.preventDefault(); // Stop real submission
 
     // Get values at once:
-    const age = form.querySelector('input[name="age"]').value;
-    const ageUnit = form.querySelector('select[name="measurement"]').value;
+    const age = form.querySelector('input[type="range"]').value;
+    const ageUnit = form.querySelector('select[name="age"]').value;
 
     const gender = form.querySelector('input[name="gender"]:checked')?.value;
 
@@ -119,10 +251,11 @@ form.addEventListener("submit", function (event) {
     const weightUnit = form.querySelector('select[name="weight-unit"]').value;
 
     var height = parseFloat(form.querySelector('input[name="height"]').value);
+    const heightUnit = form.querySelector('select[name="height-unit"]').value;
     if (!isNaN(height)) {
-        // if (heightUnit == "ft") {
-        //     height = height * 30.48
-        // }
+        if (heightUnit === "inch") {
+            height = height * 2.54
+        }
         const remainder = height % 5;
         if (remainder > 0) {
             if (remainder < 2.5) {
@@ -132,10 +265,14 @@ form.addEventListener("submit", function (event) {
             }
         }
     }
-    const heightUnit = form.querySelector('select[name="height-unit"]').value;
 
-    const muac = form.querySelector('input[name="muac"]').value;
+    var muac = form.querySelector('input[name="muac"]').value;
     const muacUnit = form.querySelector('select[name="muac-unit"]').value;
+    if (!isNaN(muac)) {
+        if (muacUnit === "inch") {
+            muac = muac * 2.54
+        }
+    }
 
     const questions = {
         headQuestion,
@@ -147,11 +284,19 @@ form.addEventListener("submit", function (event) {
 
     function getSymptomsFromForm(questionCategories) {
         return Object.values(questionCategories).flat().reduce((acc, q) => {
+            const value = form.querySelector(`input[name="${q.id}"]:checked`)?.value;
             const key = q.text.toLowerCase().replace(/\s+/g, '');
-            acc[key] = form.querySelector(`input[name="${q.id}"]:checked`)?.value;
+            if (value === 'yes') {
+                acc[key] = true;
+            } else if (value === 'no') {
+                acc[key] = false;
+            } else {
+                acc[key] = null; // optional: set to null if unanswered
+            }
             return acc;
         }, {});
     }
+
 
     // Store in one object
     const answers = {
@@ -167,10 +312,11 @@ form.addEventListener("submit", function (event) {
 
     localStorage.setItem("result", JSON.stringify(result));
 
-    console.log(height);
-    console.log(countWHZ(gender, weight, height));
+    // console.log(answers);
+    // console.log(countWHZ(gender, weight, height));
+    // console.log(result);
 
-    // window.location.href = "output.html";
+    window.location.href = "output.html";
 });
 
 // Diagnosis for symptoms
@@ -178,85 +324,207 @@ function diagnosis(x) {
     // 1️⃣ Determine Nutritional Status + Confidence
     let Status = "Uncertain";
     let Confidence = "Low";
-    const WHZ = countWHZ(x.gender, x.weight, x.height);
-
-    if (x.symptoms.edema || x.muac < 11.0 || WHZ < -3.0) {
-        Status = "SAM";
-        Confidence = "High";
-    } else if ((x.muac >= 11.0 && x.muac <= 11.4) || (WHZ >= -3.0 && WHZ <= -2.0)) {
-        Status = "SAM";
-        Confidence = "Medium";
-    } else if ((x.muac >= 11.5 && x.muac <= 12.5) || (WHZ >= -3.0 && WHZ <= -2.0)) {
-        Status = "MAM";
-        Confidence = "High";
-    } else if (x.muac > 12.5 && WHZ > -2.0) {
-        Status = "Normal";
-        Confidence = "High";
-    } else if (no_risk_signs && !Conflicting_inputs) {
-        Status = "Normal";
-        Confidence = "High";
-    } else {
-        Status = "Uncertain";
-        Confidence = "Low";
-    }
-
-    // 2️⃣ If SAM → Determine Type + Type Confidence
     let Type = "None";
     let TypeConfidence = "N/A";
+    let Note = "";
+    let riskScore = 0;
+    const WHZ = countWHZ(x.gender, x.weight, x.height);
 
+    var Source = [];
+    var SymptomSource = [];
+
+    // ---------------------------
+    // 2️⃣ Risk Scoring System
+    // ---------------------------
+    if (x.edema) riskScore += 3;                              // Rule 1
+    if (x.muac < 11.0) riskScore += 3;                        // Rule 2
+    if (WHZ < -3.0) riskScore += 3;                           // Rule 3
+    if (x.wasting) riskScore += 2;                            // Rule 4
+    if (x.diarrhea) riskScore += 1;                           // Rule 5
+    if (x.infection) riskScore += 1;                          // Rule 6
+    if (x.faceelderly || x.wrinkledskin) riskScore += 1;      // Rule 7
+    if (x.hairsparse || x.haircolorchange) riskScore += 1;    // Rule 8
+
+    // ---------------------------
+    // 3️⃣ Nutritional Status Rules
+    // ---------------------------
+    if (x.symptoms.edema || x.muac < 11.0 || WHZ < -3.0) {   // Rule 9
+        console.log(x.symptoms.edema)
+        console.log(x.muac)
+        console.log(WHZ)
+        Status = "SAM";
+        Confidence = "High";
+        if (x.symptoms.edema) {
+            Source.push("Have Edema");
+        }
+        if (x.muac < 11.0) {
+            Source.push("MUAC < 11.0 cm");
+        }
+        if (WHZ < -3.0) {
+            Source.push("WHZ < -3.0");
+        }
+    } else if (x.muac >= 11.0 && x.muac <= 11.2) {            // Rule 10
+        Status = "SAM";
+        Confidence = "Medium";
+        Source.push("MUAC between 11.0 and 11.2 cm");
+    } else if (x.muac > 11.2 && x.muac <= 11.4) {             // Rule 11
+        Status = "SAM";
+        Confidence = "Low";
+        Source.push("MUAC between 11.2 and 11.4 cm");
+    } else if (x.muac >= 11.5 && x.muac <= 12.5) {            // Rule 12
+        Status = "MAM";
+        Confidence = "High";
+        Source.push("MUAC between 11.5 and 12.5 cm");
+    } else if (WHZ >= -3.0 && WHZ <= -2.5) {                  // Rule 13
+        Status = "MAM";
+        Confidence = "Medium";
+        Source.push("WHZ between -3.0 and -2.5");
+    } else if (WHZ >= -2.5 && WHZ <= -2.0) {                  // Rule 14
+        Status = "At Risk";
+        Confidence = "Medium";
+        Source.push("WHZ between -2.5 and -2.0");
+    } else if (x.muac > 12.5 && WHZ > -2.0) {                 // Rule 15
+        Status = "Normal";
+        Confidence = "High";
+        Source.push("MUAC > 12.5 cm");
+        Source.push("WHZ > -2.0");
+    }
+
+    // ---------------------------
+    // 4️⃣ Conflicting Input Check
+    // ---------------------------
+    let ConflictingInputs = false;
+
+    if (x.muac < 11.0 && WHZ > -2.0) {                         // Rule 16
+        ConflictingInputs = true;
+        Note = "MUAC indicates SAM but WHZ is normal.";
+        Source.push("MUAC < 11.0 cm");
+        Source.push("WHZ > -2.0");
+    }
+
+    if (ConflictingInputs) {                                  // Rule 17
+        Status = "Uncertain";
+        Confidence = "Low";
+        Type = "None";
+        TypeConfidence = "N/A";
+    }
+
+    // ---------------------------
+    // 5️⃣ Risk-based Override
+    // ---------------------------
+    if (!ConflictingInputs && riskScore >= 6 && Status !== "SAM") { // Rule 18
+        Status = "SAM";
+        Confidence = "Very High";
+        Note = "Risk score high; upgraded to SAM.";
+    }
+
+    // ---------------------------
+    // 6️⃣ Subtype Classification (if SAM)
+    // ---------------------------
     if (Status === "SAM") {
-        // Kwashiorkor
         if (
-            x.hairsparse && x.haircolorchange &&
-            x.dermatosis && x.edema && x.eyessightglazed && x.fattyliver &&
-            x.infection && x.apathetic && x.wasting && x.cranky &&
-            x.anemic && x.diarrhea
+            x.symptoms.hairsparse && x.symptoms.edema &&
+            x.symptoms.wasting && x.symptoms.bloatedstomach &&
+            x.symptoms.infection && x.symptoms.fattyliver &&
+            x.symptoms.mildwastingsigns && x.symptoms.concavestomach &&
+            x.symptoms.wrinkledskin
         ) {
-            Type = "Kwashiorkor";
+            Type = "Marasmic-Kwashiorkor";                   // Rule 21
             TypeConfidence = "High";
-        }
-        // Marasmus
-        else if (
-            x.wasting && x.faceelderly && x.cranky && x.wrinkledskin &&
-            x.mildwastingsigns && x.concavestomach && x.infection && x.diarrhea
+            SymptomSource = [
+                "hairsparse", "edema", "wasting", "bloatedstomach", "infection",
+                "fattyliver", "mildwastingsigns", "concavestomach", "wrinkledskin"
+            ];
+        } else if (
+            x.symptoms.hairsparse && x.symptoms.haircolorchange &&
+            x.symptoms.dermatosis && x.symptoms.edema &&
+            x.symptoms.eyessightglazed && x.symptoms.fattyliver &&
+            x.symptoms.infection && x.symptoms.apathetic &&
+            x.symptoms.wasting && x.symptoms.cranky &&
+            x.symptoms.anemic && x.symptoms.diarrhea
         ) {
-            Type = "Marasmus";
+            Type = "Kwashiorkor";                            // Rule 19
             TypeConfidence = "High";
-        }
-        // Marasmic-Kwashiorkor
-        else if (
-            x.hairsparse && x.edema && x.wasting && x.stomachbloated &&
-            x.infection && x.fattyliver && x.mildwastingsigns &&
-            x.concavestomach && x.wrinkledskin
+            SymptomSource = [
+                "hairsparse", "haircolorchange", "dermatosis", "edema",
+                "eyessightglazed", "fattyliver", "infection", "apathetic",
+                "wasting", "cranky", "anemic", "diarrhea"
+            ];
+        } else if (
+            x.symptoms.wasting && x.symptoms.faceelderly &&
+            x.symptoms.cranky && x.symptoms.wrinkledskin &&
+            x.symptoms.mildwastingsigns && x.symptoms.concavestomach &&
+            x.symptoms.infection && x.symptoms.diarrhea
         ) {
-            Type = "Marasmic-Kwashiorkor";
+            Type = "Marasmus";                               // Rule 20
             TypeConfidence = "High";
-        }
-        // Fallback
-        else {
-            if (x.edema) {
-                Type = "Kwashiorkor";
-            } else {
-                Type = "Marasmus";
-            }
+            SymptomSource = [
+                "wasting", "faceelderly", "cranky", "wrinkledskin",
+                "mildwastingsigns", "concavestomach", "infection", "diarrhea"
+            ];
+        } else if (x.symptoms.edema && x.symptoms.hairsparse) {
+            Type = "Kwashiorkor";                            // Rule 22
             TypeConfidence = "Medium";
+            SymptomSource = ["edema", "hairsparse"];
+        } else if (x.symptoms.wasting) {
+            Type = "Marasmus";                               // Rule 23
+            TypeConfidence = "Medium";
+            SymptomSource = ["wasting"];
+        } else {
+            Type = "Unclear SAM Type";                       // Rule 24
+            TypeConfidence = "Low";
         }
     }
 
-    // 3️⃣ If conflicting inputs, force Uncertain
-    // if (Conflicting_inputs) {
-    //     Status = "Uncertain";
-    //     Confidence = "Low";
-    //     Type = "None";
-    //     TypeConfidence = "N/A";
-    // }
+    // ---------------------------
+    // 7️⃣ Optional Environmental Rule (Bonus)
+    // ---------------------------
+    if (x.feedingdifficulty || x.lossappetite) {              // Rule 25
+        Note += " Feeding problems observed.";
+    }
 
-    // 4️⃣ Return result
+    if (x.dehydrated) {                                       // Rule 26
+        Note += " Child shows signs of dehydration.";
+        if (Status === "Normal") {
+            Status = "At Risk";                               // Rule 27
+            Confidence = "Low";
+        }
+    }
+
+    if (x.breastfed === false && x.age < 24) {                // Rule 28
+        Note += " Not breastfed under 2 years old.";
+        Status = Status === "Normal" ? "At Risk" : Status;    // Rule 29
+    }
+
+    // ---------------------------
+    // 8️⃣ Final Fallback (if truly unclear)
+    // ---------------------------
+    if (Status === "Uncertain" && riskScore <= 2) {           // Rule 30
+        Note += " Child is stable but no clear indication.";
+    }
+    if (Status === "SAM") {
+        Status = "Severe Acute Malnutrition (SAM)";
+    }
+    if (Status === "MAM") {
+        Status = "Moderate Acute Malnutrition (MAM)";
+    }
+    if (Status === "Normal") {
+        Status = "Healthy";
+        Note = "Your child is healthy.";
+    }
+
+    // ---------------------------
+    // 9️⃣ Return Result
+    // ---------------------------
     return {
         Status: Status,
         Confidence: Confidence,
         Type: Type,
-        TypeConfidence: TypeConfidence
+        TypeConfidence: TypeConfidence,
+        Note: Note.trim(),
+        RiskScore: riskScore,
+        Source: Source,
+        SymptomSource: SymptomSource,
     };
 
 }

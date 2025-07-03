@@ -105,6 +105,11 @@ header p {
     height: 80px;
 }
 
+#type-confidence-container {
+    padding: 0 30px;
+    margin-right: 0;
+}
+
 .conf-level-container {
     display: flex;
 }

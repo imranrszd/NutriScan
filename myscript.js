@@ -90,11 +90,61 @@ const healthQuestion = [
     { id: '18', text: 'Appetite Loss' },
 ];
 
+const conflicts = {
+    8: ['9', '11'],
+    9: ['8'],
+    11: ["12", "8"],
+    12: ["11"],
+    7: ["8"],
+};
+function setupConflictRules() {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+    checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+            const selectedName = checkbox.name;
+            const isChecked = checkbox.checked;
+
+            // First, re-enable everything that’s not currently in conflict
+            checkboxes.forEach(cb => {
+                let stillInConflict = false;
+                checkboxes.forEach(checkedBox => {
+                    if (
+                        checkedBox.checked &&
+                        conflicts[checkedBox.name]?.includes(cb.name)
+                    ) {
+                        stillInConflict = true;
+                    }
+                });
+
+                if (!stillInConflict) {
+                    cb.disabled = false;
+                }
+            });
+
+            // Disable direct conflicts of the one just selected
+            if (isChecked && conflicts[selectedName]) {
+                conflicts[selectedName].forEach(conflictName => {
+                    const conflictCheckbox = document.querySelector(`input[name="${conflictName}"]`);
+                    console.log(`Disabling conflict: ${conflictName}`);
+                    if (conflictCheckbox) {
+                        conflictCheckbox.checked = false;
+                        conflictCheckbox.disabled = true;
+                    }
+                });
+            }
+        });
+    });
+}
+
 createQuestionSection(headQuestion, 'hair-question');
 createQuestionSection(skinQuestion, 'skin-question');
 createQuestionSection(bodyQuestion, 'body-question');
 createQuestionSection(behaviorQuestion, 'behavior-question');
 createQuestionSection(healthQuestion, 'health-question');
+
+setupConflictRules();
+
 function createQuestionSection(questions, sectionId) {
     const section = document.getElementById(sectionId);
     questions.forEach((q, index) => {
@@ -109,25 +159,6 @@ function createQuestionSection(questions, sectionId) {
         section.appendChild(div);
     });
 }
-// function createQuestionSection(questions, sectionId) {
-//     const section = document.getElementById(sectionId);
-//     questions.forEach((q, index) => {
-//         const div = document.createElement('div');
-//         div.innerHTML = `
-//     <div class="radio-question">
-//         <p>${index + 1}. ${q.text}</p>
-//         <div class="choices">
-//         <label id="yes-button"><input type="radio" name="${q.id}" value="yes"> <span>Yes</span></label>
-//         <hr>
-//         <label><input type="radio" name="${q.id}" value="uncertain"> <span>Uncertain</span></label>
-//         <hr>
-//         <label id="no-button"><input type="radio" name="${q.id}" value="no"> <span>No</span></label>
-//         </div>
-//     </div>
-//   `;
-//         section.appendChild(div);
-//     });
-// }
 
 const weightInput = document.querySelector('input[name="weight"]');
 const weightUnit = document.querySelector('select[name="weight-unit"]');
@@ -223,9 +254,6 @@ function validateForm() {
 
     nextQuestion.disabled = !(isFormValid && isHeightValid);
 }
-
-
-
 
 // Scroll to the second question
 const nextQuestion = document.getElementById("next-question");
@@ -325,11 +353,11 @@ form.addEventListener("submit", function (event) {
 
     localStorage.setItem("result", JSON.stringify(result));
 
-    // console.log(answers);
-    // console.log(countWHZ(gender, weight, height));
-    // console.log(result);
+    console.log(answers);
+    console.log(countWHZ(gender, weight, height));
+    console.log(result);
 
-    window.location.href = "output.html";
+    // window.location.href = "output.html";
 });
 
 // Diagnosis for symptoms
@@ -439,14 +467,13 @@ function diagnosis(x) {
             x.symptoms.hairsparse && x.symptoms.edema &&
             x.symptoms.wasting && x.symptoms.bloatedstomach &&
             x.symptoms.infection && x.symptoms.fattyliver &&
-            x.symptoms.mildwastingsigns && x.symptoms.concavestomach &&
-            x.symptoms.wrinkledskin
+            x.symptoms.concavestomach && x.symptoms.wrinkledskin
         ) {
             Type = "Marasmic-Kwashiorkor";                   // Rule 21
             TypeConfidence = "High";
             SymptomSource = [
                 "hairsparse", "edema", "wasting", "bloatedstomach", "infection",
-                "fattyliver", "mildwastingsigns", "concavestomach", "wrinkledskin"
+                "fattyliver", "concavestomach", "wrinkledskin"
             ];
         } else if (
             x.symptoms.hairsparse && x.symptoms.haircolorchange &&

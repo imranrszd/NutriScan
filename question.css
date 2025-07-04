@@ -426,7 +426,8 @@ button {
     height: 2px;
     background-color: #24A850;
     border: none;
-    margin-bottom: 20px;
+    margin-top: .5em;
+    margin-bottom: 2em;
 }
 
 .diagnosis-question {
@@ -458,6 +459,7 @@ button {
     border: 2px solid #28a745;
     border-radius: 6px;
     color: #28a745;
+    font-size: .9em;
     font-weight: 500;
     display: inline-block;
     transition: all 0.2s ease;
@@ -471,66 +473,15 @@ button {
     color: white;
 }
 
-/* 
-.symptoms-question {
-    font-size: 18px;
-    font-weight: 600;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-} */
-
-/* .radio-question {
-    display: flex;
-    align-items: start;
-    justify-content: space-between;
-    width: 100%;
+.choices input[type="checkbox"]:disabled+.checkmark {
+    background-color: #aaaaaa;
+    color: white;
+    border: 2px solid #aaaaaa;
 }
-
-@media (max-width: 898px) {
-    .radio-question {
-        flex-direction: column;
-        align-items: start;
-        margin-bottom: 20px;
-    }
-} */
-
-
-/* .choices {
-    display: flex;
-    background-color: #ffffff;
-    border-radius: 5px;
-    border: #24A850 1px solid;
-}
-
-.choices hr {
-    width: 1px;
-    background-color: #24A850;
-
-}
-
-.choices label {
-    padding: 5px 20px;
-    cursor: pointer;
-    font-size: 16px;
-} */
-
 
 input[type="radio"] {
     display: none;
 }
-
-/* .choices label:has(input[type="radio"]:checked) {
-    background-color: #24A850;
-    color: #ffffff;
-    font-weight: 600;
-}
-
-.choices hr {
-    width: 1px;
-    border: #24A850 solid 1px;
-} */
 
 #yes-button {
     border-top-left-radius: 3px;

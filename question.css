@@ -116,7 +116,7 @@ form {
 }
 
 .second-question {
-    display: none;
+    display: flex;
 
     flex-direction: column;
     text-align: center;
@@ -423,12 +423,55 @@ button {
 }
 
 .sub-title hr {
-    height: 3px;
+    height: 2px;
     background-color: #24A850;
     border: none;
     margin-bottom: 20px;
 }
 
+.diagnosis-question {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.checkbox-question {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.choices {
+    display: flex;
+    width: fit-content;
+    cursor: pointer;
+    user-select: none;
+}
+
+.choices input[type="checkbox"] {
+    display: none;
+}
+
+.checkmark {
+    padding: .8rem 1rem;
+    border: 2px solid #28a745;
+    border-radius: 6px;
+    color: #28a745;
+    font-weight: 500;
+    display: inline-block;
+    transition: all 0.2s ease;
+    width: 200px;
+    text-align: start;
+}
+
+.choices input[type="checkbox"]:checked+.checkmark {
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    background-color: #28a745;
+    color: white;
+}
+
+/* 
 .symptoms-question {
     font-size: 18px;
     font-weight: 600;
@@ -436,9 +479,9 @@ button {
     flex-direction: column;
     align-items: center;
     width: 100%;
-}
+} */
 
-.radio-question {
+/* .radio-question {
     display: flex;
     align-items: start;
     justify-content: space-between;
@@ -451,9 +494,10 @@ button {
         align-items: start;
         margin-bottom: 20px;
     }
-}
+} */
 
-.choices {
+
+/* .choices {
     display: flex;
     background-color: #ffffff;
     border-radius: 5px;
@@ -470,13 +514,14 @@ button {
     padding: 5px 20px;
     cursor: pointer;
     font-size: 16px;
-}
+} */
+
 
 input[type="radio"] {
     display: none;
 }
 
-.choices label:has(input[type="radio"]:checked) {
+/* .choices label:has(input[type="radio"]:checked) {
     background-color: #24A850;
     color: #ffffff;
     font-weight: 600;
@@ -485,7 +530,7 @@ input[type="radio"] {
 .choices hr {
     width: 1px;
     border: #24A850 solid 1px;
-}
+} */
 
 #yes-button {
     border-top-left-radius: 3px;

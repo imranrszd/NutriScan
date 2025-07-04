@@ -95,26 +95,39 @@ createQuestionSection(skinQuestion, 'skin-question');
 createQuestionSection(bodyQuestion, 'body-question');
 createQuestionSection(behaviorQuestion, 'behavior-question');
 createQuestionSection(healthQuestion, 'health-question');
-
 function createQuestionSection(questions, sectionId) {
     const section = document.getElementById(sectionId);
     questions.forEach((q, index) => {
         const div = document.createElement('div');
+        div.className = 'checkbox-question';
         div.innerHTML = `
-    <div class="radio-question">
-        <p>${index + 1}. ${q.text}</p>
-        <div class="choices">
-        <label id="yes-button"><input type="radio" name="${q.id}" value="yes"> <span>Yes</span></label>
-        <hr>
-        <label><input type="radio" name="${q.id}" value="uncertain"> <span>Uncertain</span></label>
-        <hr>
-        <label id="no-button"><input type="radio" name="${q.id}" value="no"> <span>No</span></label>
-        </div>
-    </div>
-  `;
+            <label class="choices">
+                <input type="checkbox" name="${q.id}" value="yes">
+                <span class="checkmark">${index + 1}. ${q.text}</span>
+            </label>
+        `;
         section.appendChild(div);
     });
 }
+// function createQuestionSection(questions, sectionId) {
+//     const section = document.getElementById(sectionId);
+//     questions.forEach((q, index) => {
+//         const div = document.createElement('div');
+//         div.innerHTML = `
+//     <div class="radio-question">
+//         <p>${index + 1}. ${q.text}</p>
+//         <div class="choices">
+//         <label id="yes-button"><input type="radio" name="${q.id}" value="yes"> <span>Yes</span></label>
+//         <hr>
+//         <label><input type="radio" name="${q.id}" value="uncertain"> <span>Uncertain</span></label>
+//         <hr>
+//         <label id="no-button"><input type="radio" name="${q.id}" value="no"> <span>No</span></label>
+//         </div>
+//     </div>
+//   `;
+//         section.appendChild(div);
+//     });
+// }
 
 const weightInput = document.querySelector('input[name="weight"]');
 const weightUnit = document.querySelector('select[name="weight-unit"]');

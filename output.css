@@ -208,7 +208,7 @@ header p {
 }
 
 #second-layer .type,
-#second-layer .note {
+#second-layer .note-risk-container {
     width: 50%;
 }
 
@@ -248,15 +248,40 @@ header p {
     border: none;
 }
 
-.note {
+.note-risk-container {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.note div {
-    padding: 20px 50px;
+.risk-score-container {
+    display: flex;
+    width: 200px;
+    padding: 20px 30px;
+    justify-content: space-between;
+    align-items: end;
+    border-radius: 10px;
+    background-color: var(--main-color);
+    color: white;
+    font-size: large;
+    align-self: end;
+    margin-right: 15%;
 }
 
-.note .actual-note {
+.risk-score-container p {
+    margin: 0;
+}
+
+.risk-score-container h3 {
+    margin: 0;
+    font-size: 26px;
+}
+
+.note {
+    padding: 0 50px;
+}
+
+.actual-note {
     font-weight: 600;
     font-size: 1.1em;
 }

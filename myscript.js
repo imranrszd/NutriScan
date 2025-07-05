@@ -110,6 +110,9 @@ function setupConflictRules() {
             checkboxes.forEach(cb => {
                 let stillInConflict = false;
                 checkboxes.forEach(checkedBox => {
+                    if (checkedBox.checked && checkedBox != selectNoneCheckbox) {
+                        selectNoneCheckbox.checked = false; // Uncheck "Select None" if any checkbox is checked
+                    }
                     if (
                         checkedBox.checked &&
                         conflicts[checkedBox.name]?.includes(cb.name)
@@ -137,6 +140,33 @@ function setupConflictRules() {
         });
     });
 }
+
+var isSelectNoneLocked = false;
+const selectNoneCheckbox = document.querySelector('input[name="select-none"]');
+
+if (selectNoneCheckbox.checked) {
+    isSelectNoneLocked = true; // lock it so user can't uncheck manually
+}
+
+selectNoneCheckbox.addEventListener("change", function (e) {
+    if (this.checked) {
+        const confirmClear = confirm("Are you sure you want to clear all selections?");
+        if (confirmClear) {
+            // Uncheck and enable all others
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:not([name="select-none"])');
+            checkboxes.forEach(cb => {
+                cb.checked = false;
+                cb.disabled = false;
+            });
+
+        } else {
+            this.checked = false;
+        }
+    } else if (isSelectNoneLocked) {
+        // Prevent unchecking by re-checking it immediately
+        this.checked = true;
+    }
+});
 
 createQuestionSection(headQuestion, 'hair-question');
 createQuestionSection(skinQuestion, 'skin-question');
@@ -373,9 +403,9 @@ form.addEventListener("submit", function (event) {
 
     localStorage.setItem("result", JSON.stringify(result));
 
-    // console.log(answers);
-    // console.log(countWHZ(gender, weight, height));
-    // console.log(result);
+    console.log(answers);
+    console.log(countWHZ(gender, weight, height));
+    console.log(result);
 
     window.location.href = "output.html";
 });
@@ -397,14 +427,14 @@ function diagnosis(x) {
     // ---------------------------
     // 2️⃣ Risk Scoring System
     // ---------------------------
-    if (x.edema) riskScore += 3;                              // Rule 1
+    if (x.symptoms.edema) riskScore += 3;                              // Rule 1
     if (x.muac < 11.0) riskScore += 3;                        // Rule 2
     if (WHZ < -3.0) riskScore += 3;                           // Rule 3
-    if (x.wasting) riskScore += 2;                            // Rule 4
-    if (x.diarrhea) riskScore += 1;                           // Rule 5
-    if (x.infection) riskScore += 1;                          // Rule 6
-    if (x.faceelderly || x.wrinkledskin) riskScore += 1;      // Rule 7
-    if (x.hairsparse || x.haircolorchange) riskScore += 1;    // Rule 8
+    if (x.symptoms.wasting) riskScore += 2;                            // Rule 4
+    if (x.symptoms.diarrhea) riskScore += 1;                           // Rule 5
+    if (x.symptoms.infection) riskScore += 1;                          // Rule 6
+    if (x.symptoms.faceelderly || x.symptoms.wrinkledskin) riskScore += 1;      // Rule 7
+    if (x.symptoms.hairsparse || x.symptoms.haircolorchange) riskScore += 1;    // Rule 8
 
     // ---------------------------
     // 3️⃣ Nutritional Status Rules
@@ -567,6 +597,10 @@ function diagnosis(x) {
         Note = "Your child is healthy. Continue providing proper nutrition and care.";
     }
 
+    function riskToPercent() {
+        return `${(riskScore / 15 * 100).toFixed(2)}%`;
+    }
+
     // ---------------------------
     // 9️⃣ Return Result
     // ---------------------------
@@ -576,7 +610,7 @@ function diagnosis(x) {
         Type: Type,
         TypeConfidence: TypeConfidence,
         Note: Note.trim(),
-        RiskScore: riskScore,
+        RiskScore: riskToPercent(),
         Source: Source,
         SymptomSource: SymptomSource,
     };

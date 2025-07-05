@@ -87,8 +87,12 @@
                     </div>
                 </div>
                 <hr>
-                <div class="note">
-                    <div>
+                <div class="note-risk-container">
+                    <div class="risk-score-container">
+                        <p>Risk Score</p>
+                        <h3 id="risk-score"></h3>
+                    </div>
+                    <div class="note">
                         <p>Note</p>
                         <p class="actual-note" id="note">You should do this..</p>
                     </div>
@@ -128,6 +132,7 @@
                 document.getElementById("confidence").innerHTML = `<span>${result.Confidence}</span>`
                 document.getElementById("type").innerHTML = `<span>${result.Type}</span>`
                 document.getElementById("type-confidence").innerHTML = `<span>${result.TypeConfidence}</span>`
+                document.getElementById("risk-score").innerHTML = `<span>${result.RiskScore}</span>`
                 document.getElementById("note").innerHTML = `<span>${result.Note}</span>`
             }
             if (result.Source && result.Source.length > 0) {

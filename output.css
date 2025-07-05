@@ -47,7 +47,7 @@ header p {
 .sub-wrapper {
     background-color: #fff;
     width: 70%;
-    margin: 100px;
+    margin: 120px 100px;
     display: flex;
     flex-direction: column;
     align-items: center;

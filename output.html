@@ -40,19 +40,19 @@
                 <br>
                 <div class="slider-container">
                     <div class="indicator">
-                        <span>
-                            <hr>
+                        <span id="healthy-indicator">
                         </span>
-                        <span>
-                            <hr>
+                        <span id="at-risk-indicator">
                         </span>
-                        <span>
-                            <hr>
+                        <span id="mam-indicator">
+                        </span>
+                        <span id="sam-indicator">
                         </span>
                     </div>
                     <hr>
                     <div class="slider-labels">
                         <span>HEALTHY</span>
+                        <span>AT RISK</span>
                         <span>MAM</span>
                         <span>SAM</span>
                     </div>
@@ -63,7 +63,7 @@
                 <div class="type">
                     <div class="left-side">
                         <p style="margin: 0;">Type</p>
-                        <h3 class="title" id="type">Kwashiorkor</h3>
+                        <h3 class="title" id="type">a</h3>
                         <br>
                         <div class="confidence" id="type-confidence-container">
                             <div style="margin-right: 30px;">
@@ -152,6 +152,13 @@
                 document.querySelector('.symptoms').innerHTML = '<span>No related symptoms available</span>';
             }
 
+            function statusArrowPosition(elementID) {
+                const element = document.getElementById(elementID);
+                element.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3 4L8 12L13 4H3Z" />
+                                    </svg>`;
+            }
+
             if (stored) {
                 const root = document.documentElement;
                 console.log("Status:", status);
@@ -160,14 +167,22 @@
                     case "Healthy":
                         root.style.setProperty("--main-color", "#4CAF50"); // green
                         root.style.setProperty("--secondary-color", "#B4FFCD"); // green
+                        statusArrowPosition("healthy-indicator");
+                        break;
+                    case "At Risk":
+                        root.style.setProperty("--main-color", "#9FA824"); // green
+                        root.style.setProperty("--secondary-color", "#FBFFC2"); // green
+                        statusArrowPosition("at-risk-indicator");
                         break;
                     case "Moderate Acute Malnutrition (MAM)":
-                        root.style.setProperty("--main-color", "#9FA824"); // yellow
+                        root.style.setProperty("--main-color", "#D28F23"); // yellow
                         root.style.setProperty("--secondary-color", "#FBFFC2"); // yellow
+                        statusArrowPosition("mam-indicator");
                         break;
                     case "Severe Acute Malnutrition (SAM)":
                         root.style.setProperty("--main-color", "#A82424"); // red
                         root.style.setProperty("--secondary-color", "#FFD0D0"); // red
+                        statusArrowPosition("sam-indicator");
                         break;
                     default:
                         root.style.setProperty("--main-color", "gray"); // fallback

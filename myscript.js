@@ -88,6 +88,7 @@ const healthQuestion = [
     { id: '16', text: 'Diarrhea' },
     { id: '17', text: 'Anemic' },
     { id: '18', text: 'Appetite Loss' },
+    { id: '19', text: 'Breast Fed' },
 ];
 
 const conflicts = {
@@ -167,6 +168,9 @@ weightUnit.addEventListener("change", function () {
     changeWeightUnit(weightInput, weightUnit)
 });
 
+restrictInput(weightInput, 2);
+
+
 function changeWeightUnit(input, unit) {
     let value = parseFloat(input.value);
 
@@ -186,18 +190,34 @@ function changeWeightUnit(input, unit) {
 const heightInput = document.querySelector('input[name="height"]');
 const heightUnit = document.querySelector('select[name="height-unit"]');
 
+restrictInput(heightInput, 3);
+
 const muacInput = document.querySelector('input[name="muac"]');
 const muacUnit = document.querySelector('select[name="muac-unit"]');
 
+restrictInput(muacInput, 2);
+
+function restrictInput(input, number) {
+    input.addEventListener("input", function () {
+        let value = input.value;
+
+        // Restrict decimal places to 2
+        if (value.includes('.')) {
+            const [intPart, decimalPart] = value.split(".");
+            input.value = intPart + "." + decimalPart.slice(0, 2);
+        }
+        // Restrict integer length
+        if (!value.includes('.') && value.length > number) {
+            input.value = value.slice(0, number);
+        }
+    });
+}
 heightUnit.addEventListener("input", function (event) {
     heightValue = parseFloat(event.target.value) || 0;
 });
 
 var heightValue;
 
-// heightInput.addEventListener("input", function (event) {
-//     heightValue = parseFloat(event.target.value) || 0;
-// });
 
 const span = document.getElementById('height-display');
 
@@ -353,11 +373,11 @@ form.addEventListener("submit", function (event) {
 
     localStorage.setItem("result", JSON.stringify(result));
 
-    console.log(answers);
-    console.log(countWHZ(gender, weight, height));
-    console.log(result);
+    // console.log(answers);
+    // console.log(countWHZ(gender, weight, height));
+    // console.log(result);
 
-    // window.location.href = "output.html";
+    window.location.href = "output.html";
 });
 
 // Diagnosis for symptoms
@@ -519,16 +539,8 @@ function diagnosis(x) {
     // ---------------------------
     // 7️⃣ Optional Environmental Rule (Bonus)
     // ---------------------------
-    if (x.feedingdifficulty || x.lossappetite) {              // Rule 25
+    if (x.appetiteloss) {              // Rule 25
         Note += " Feeding problems observed.";
-    }
-
-    if (x.dehydrated) {                                       // Rule 26
-        Note += " Child shows signs of dehydration.";
-        if (Status === "Normal") {
-            Status = "At Risk";                               // Rule 27
-            Confidence = "Low";
-        }
     }
 
     if (x.breastfed === false && x.age < 24) {                // Rule 28
@@ -540,17 +552,19 @@ function diagnosis(x) {
     // 8️⃣ Final Fallback (if truly unclear)
     // ---------------------------
     if (Status === "Uncertain" && riskScore <= 2) {           // Rule 30
-        Note += " Child is stable but no clear indication.";
+        Note += " Child appears stable but there is no clear indication of malnutrition. Monitoring is recommended.";
     }
     if (Status === "SAM") {
         Status = "Severe Acute Malnutrition (SAM)";
+        Note = "Your child is showing signs of severe acute malnutrition. Immediate medical attention is strongly recommended.";
     }
     if (Status === "MAM") {
         Status = "Moderate Acute Malnutrition (MAM)";
+        Note = "Your child is moderately malnourished. Nutritional support and close follow-up are important.";
     }
     if (Status === "Normal") {
         Status = "Healthy";
-        Note = "Your child is healthy.";
+        Note = "Your child is healthy. Continue providing proper nutrition and care.";
     }
 
     // ---------------------------

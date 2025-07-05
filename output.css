@@ -88,6 +88,11 @@ header p {
     flex-direction: column;
 }
 
+.type {
+    display: flex;
+
+}
+
 .title {
     font-size: 26px;
 }
@@ -176,6 +181,7 @@ header p {
     justify-content: center;
     width: 70px;
     text-align: center;
+    color: var(--main-color);
 }
 
 .slider-container .indicator {

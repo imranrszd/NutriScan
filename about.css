@@ -28,3 +28,50 @@ header p {
     font-size: 24px;
     font-weight: 600;
 }
+
+.banner {
+    border: #24A850 1px solid;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: gray;
+}
+
+.banner h2 {
+    color: white;
+    font-size: 36px;
+    font-weight: 600;
+}
+
+.team {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 10%;
+}
+
+.team-member {
+    border: #24A850 1px solid;
+    border-radius: 10px;
+    width: 250px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    background-color: white;
+    color: #24A850;
+    padding: 30px 10px;
+}
+
+.team-member .pic {
+    border: #24A850 1px solid;
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.team-member h2 {
+    width: 10px;
+}

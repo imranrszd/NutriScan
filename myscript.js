@@ -247,6 +247,8 @@ heightUnit.addEventListener("input", function (event) {
 });
 
 var heightValue;
+var weightValue;
+var muacValue;
 
 
 const span = document.getElementById('height-display');
@@ -283,6 +285,8 @@ function changeHeightUnit(input, unit) {
 }
 
 let isHeightValid = false;
+var isWeightValid = false;
+var isMuacValid = false;
 
 // Enable next button only when all inputs are answered
 const form = document.querySelector("form");
@@ -291,6 +295,19 @@ form.addEventListener("input", validateForm);
 function validateForm() {
     const isFormValid = form.checkValidity();
     heightValue = parseFloat(heightInput.value);
+    weightValue = parseFloat(weightInput.value);
+    muacValue = parseFloat(muacInput.value);
+
+    if (!isNaN(weightValue)) {
+        if (weightUnit.value === "kg") {
+            isWeightValid = weightValue >= 2 && weightValue <= 40;
+        } else if (weightUnit.value === "lbs") {
+            isWeightValid = weightValue >= 4.41 && weightValue <= 88.18;
+        }
+
+    } else {
+        isWeightValid = false;
+    }
 
     if (!isNaN(heightValue)) {
         if (heightUnit.value === "cm") {
@@ -302,7 +319,17 @@ function validateForm() {
         isHeightValid = false;
     }
 
-    nextQuestion.disabled = !(isFormValid && isHeightValid);
+    if (!isNaN(muacValue)) {
+        if (muacUnit.value === "cm") {
+            isMuacValid = muacValue >= 7 && muacValue <= 22;
+        } else if (muacUnit.value === "inch") {
+            isMuacValid = muacValue >= 2.76 && muacValue <= 8.66;
+        }
+    } else {
+        isMuacValid = false;
+    }
+
+    nextQuestion.disabled = !(isFormValid && isHeightValid && isWeightValid && isMuacValid);
 }
 
 // Scroll to the second question

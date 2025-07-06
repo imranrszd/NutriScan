@@ -510,6 +510,13 @@ input[type="radio"] {
     padding: 0 80px;
 }
 
+@media (max-width: 800px) {
+    .end-button {
+        flex-direction: column;
+        align-items: start;
+    }
+}
+
 input[type=submit]:disabled {
     box-shadow: none;
     background-color: rgb(170, 170, 170);

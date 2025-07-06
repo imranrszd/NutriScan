@@ -75,7 +75,8 @@ header p {
 .nutritional-stat {
     display: flex;
     width: 100%;
-    gap: 10px
+    gap: 10px;
+    padding: 0 10%;
 }
 
 .nutritional-stat div {
@@ -83,14 +84,15 @@ header p {
 }
 
 .nutritional-stat .status {
-    margin-left: 10%;
     display: flex;
     flex-direction: column;
 }
 
-.type {
-    display: flex;
-
+@media (max-width: 800px) {
+    .nutritional-stat {
+        flex-direction: column;
+        gap: 35px;
+    }
 }
 
 .title {
@@ -99,7 +101,7 @@ header p {
 
 .confidence {
     display: flex;
-    margin-right: 10%;
+    margin-right: 20%;
     background-color: var(--main-color);
     border-radius: 10px;
     color: white;
@@ -201,26 +203,60 @@ header p {
 }
 
 #second-layer {
+    display: flex;
     box-sizing: border-box;
     width: 100%;
     display: flex;
     padding: 0;
 }
 
-#second-layer .type,
-#second-layer .note-risk-container {
+
+.type,
+.note-risk-container {
+    box-sizing: border-box;
     width: 50%;
+    display: flex;
+    flex-grow: 1;
+    padding: 20px 50px;
 }
+
+#second-layer hr {
+    width: 2px;
+    height: 100%;
+    background-color: #B4FFCD;
+    border: none;
+}
+
+@media (max-width: 1150px) {
+    #second-layer {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .type,
+    .note-risk-container {
+        width: 100%;
+        flex-grow: 1;
+    }
+
+    #second-layer hr {
+        width: 100%;
+        height: 2px;
+        background-color: #B4FFCD;
+        border: none;
+    }
+}
+
 
 .type {
     /* border: var(--main-color) solid 1px; */
     display: flex;
     align-items: start;
-    justify-content: start;
+    justify-content: space-around;
+    gap: 30px;
 }
 
 .type .left-side {
-    padding: 20px 20%;
     padding-bottom: 50px;
     display: flex;
     flex-direction: column;
@@ -241,12 +277,6 @@ header p {
     padding-top: 30px;
 }
 
-#second-layer hr {
-    width: 2px;
-    height: 100%;
-    background-color: #B4FFCD;
-    border: none;
-}
 
 .note-risk-container {
     display: flex;

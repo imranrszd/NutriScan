@@ -74,14 +74,14 @@ const skinQuestion = [
 const bodyQuestion = [
     { id: '7', text: 'Edema' },
     { id: '8', text: 'Wasting' },
-    { id: '9', text: 'Mild Wasting Signs' },
+    // { id: '9', text: 'Mild Wasting Signs' },
     { id: '10', text: 'Fatty Liver' },
     { id: '11', text: 'Bloated Stomach' },
     { id: '12', text: 'Concave Stomach' },
     { id: '13', text: 'Prominent Ribs' },
 ];
 const behaviorQuestion = [
-    { id: '14', text: 'Cranky' },
+    // { id: '14', text: 'Cranky' },
     { id: '15', text: 'Apathetic' },
 ];
 const healthQuestion = [

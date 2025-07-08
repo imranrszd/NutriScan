@@ -53,7 +53,12 @@
                 <br>
                 <div class="sub-first">
                     <div class="left-side">
-                        <label>Child's Weight:</label>
+                        <label id="weight-label" class="whm-label">
+                            <p>Child's Weight:</p>
+                            <p>Valid range:
+                                <span id="weight-display">2 to 40</span>
+                            </p>
+                        </label>
                         <div class="q-bar">
                             <input type="number" name="weight" step="any" required placeholder="Enter weight" min="1"
                                 maxlength="2">
@@ -65,10 +70,10 @@
                             </select>
                         </div>
                         <br>
-                        <label id="height-label">
+                        <label id="height-label" class="whm-label">
                             <p>Child's Height:</p>
-                            <p>Minimum height:
-                                <span id="height-display">45 cm</span>
+                            <p>Valid range:
+                                <span id="height-display">45 to 110</span>
                                 <!-- <span>1'4"</span> -->
                             </p>
 
@@ -108,7 +113,12 @@
                             </label>
                         </div>
                         <br>
-                        <label>Child’s MUAC (Mid-Upper Arm Circumference):</label>
+                        <label id="muac-label" class="whm-label" style="flex-direction: column; align-items: start;">
+                            <p>Child’s MUAC (Mid-Upper Arm Circumference):</p>
+                            <p>Valid range:
+                                <span id="muac-display">7 to 22</span>
+                            </p>
+                        </label>
                         <div class="q-bar">
                             <input type="number" name="muac" min="0" step="any" required placeholder="Enter MUAC"
                                 min="1" maxlength="2">

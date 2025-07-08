@@ -147,25 +147,26 @@ label {
     background-color: #24A850;
 }
 
-#height-label {
+.whm-label {
     display: flex;
     align-items: end;
     justify-content: space-between;
 }
 
 @media (max-width: 1690px) {
-    #height-label {
+
+    .whm-label {
         flex-direction: column;
         align-items: start;
     }
 }
 
-#height-label p {
+.whm-label p {
     margin: 0;
 }
 
-#height-label span,
-#height-label p:nth-child(2) {
+.whm-label span,
+.whm-label p:nth-child(2) {
     font-weight: 500;
     font-size: 14px;
 }

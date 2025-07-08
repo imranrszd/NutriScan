@@ -78,25 +78,29 @@ const bodyQuestion = [
     { id: '10', text: 'Fatty Liver' },
     { id: '11', text: 'Bloated Stomach' },
     { id: '12', text: 'Concave Stomach' },
+    { id: '13', text: 'Prominent Ribs' },
 ];
 const behaviorQuestion = [
-    { id: '13', text: 'Cranky' },
-    { id: '14', text: 'Apathetic' },
+    { id: '14', text: 'Cranky' },
+    { id: '15', text: 'Apathetic' },
 ];
 const healthQuestion = [
-    { id: '15', text: 'Infection' },
-    { id: '16', text: 'Diarrhea' },
-    { id: '17', text: 'Anemic' },
-    { id: '18', text: 'Appetite Loss' },
-    { id: '19', text: 'Breast Fed' },
+    { id: '16', text: 'Infection' },
+    { id: '17', text: 'Diarrhea' },
+    { id: '18', text: 'Anemic' },
+    { id: '19', text: 'Appetite Loss' },
+    { id: '20', text: 'Breast Fed' },
 ];
 
 const conflicts = {
-    8: ['9', '11'],
+    5: ['6'],
+    6: ['5'],
+    8: ['9'],
     9: ['8'],
-    11: ["12", "8"],
+    10: ['13'],
+    11: ["12"],
     12: ["11"],
-    7: ["8"],
+    13: ["10"],
 };
 function setupConflictRules() {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -250,18 +254,41 @@ var heightValue;
 var weightValue;
 var muacValue;
 
-
-const span = document.getElementById('height-display');
+weightUnit.addEventListener("change", function () {
+    changeWeightUnit(weightInput, weightUnit);
+    validateForm(); // manually re-validate
+    if (weightUnit.value === 'kg') {
+        console.log('kg');
+        document.getElementById('weight-display').textContent = '2 to 40';
+    } else if (weightUnit.value === 'lbs') {
+        console.log('lbs');
+        document.getElementById('weight-display').textContent = '4.5 to 88.1';
+    }
+});
 
 heightUnit.addEventListener("change", function () {
+    const span = document.getElementById('height-display');
     changeHeightUnit(heightInput, heightUnit);
     validateForm(); // manually re-validate
     if (heightUnit.value === 'cm') {
         console.log('cm');
-        span.textContent = '45 cm';
+        span.textContent = '45 to 110';
     } else if (heightUnit.value === 'inch') {
         console.log('inch');
-        span.textContent = '17.8 inch';
+        span.textContent = '17.8 to 43.3';
+    }
+});
+
+muacUnit.addEventListener("change", function () {
+    const span = document.getElementById('muac-display');
+    changeHeightUnit(muacInput, muacUnit);
+    validateForm(); // manually re-validate
+    if (muacUnit.value === 'cm') {
+        console.log('cm');
+        span.textContent = '7 to 22';
+    } else if (muacUnit.value === 'inch') {
+        console.log('inch');
+        span.textContent = '2.8 to 8.6';
     }
 });
 
@@ -541,43 +568,54 @@ function diagnosis(x) {
     // ---------------------------
     if (Status === "SAM") {
         if (
-            x.symptoms.hairsparse && x.symptoms.edema &&
-            x.symptoms.wasting && x.symptoms.bloatedstomach &&
-            x.symptoms.infection && x.symptoms.fattyliver &&
-            x.symptoms.concavestomach && x.symptoms.wrinkledskin
+            x.symptoms.edema &&                                 // Swelling
+            x.symptoms.wasting &&                               // Muscle loss
+            x.symptoms.hairsparse &&                            // Sparse hair
+            x.symptoms.bloatedstomach &&                        // Abnormally distended belly
+            x.symptoms.fattyliver &&                            // Hepatomegaly
+            x.symptoms.infection &&                             // Chronic or recurrent infections
+            x.symptoms.wrinkledskin                           // Wrinkled skin from loss of fat
         ) {
             Type = "Marasmic-Kwashiorkor";                   // Rule 21
             TypeConfidence = "High";
             SymptomSource = [
-                "hairsparse", "edema", "wasting", "bloatedstomach", "infection",
-                "fattyliver", "concavestomach", "wrinkledskin"
+                "edema", "wasting", "hairsparse", "bloatedstomach",
+                "fattyliver", "infection", "wrinkledskin"
             ];
         } else if (
-            x.symptoms.hairsparse && x.symptoms.haircolorchange &&
-            x.symptoms.dermatosis && x.symptoms.edema &&
-            x.symptoms.eyessightglazed && x.symptoms.fattyliver &&
-            x.symptoms.infection && x.symptoms.apathetic &&
-            x.symptoms.wasting && x.symptoms.cranky &&
-            x.symptoms.anemic && x.symptoms.diarrhea
+            x.symptoms.edema &&                            // swelling
+            x.symptoms.hairsparse &&                       // sparse hair
+            x.symptoms.haircolorchange &&                  // hair turning reddish or pale
+            x.symptoms.dermatosis &&                       // skin changes
+            x.symptoms.fattyliver &&                       // enlarged liver
+            x.symptoms.eyessightglazed &&                  // glazed eyes
+            x.symptoms.apathetic &&                         // low activity
+            x.symptoms.infection &&                         // repeated infections
+            x.symptoms.anemic &&                            // anemia symptoms
+            x.symptoms.diarrhea                             // diarrhea
         ) {
             Type = "Kwashiorkor";                            // Rule 19
             TypeConfidence = "High";
             SymptomSource = [
-                "hairsparse", "haircolorchange", "dermatosis", "edema",
-                "eyessightglazed", "fattyliver", "infection", "apathetic",
-                "wasting", "cranky", "anemic", "diarrhea"
+                "edema", "hairsparse", "haircolorchange", "dermatosis",
+                "fattyliver", "eyessightglazed", "apathetic",
+                "infection", "anemic", "diarrhea"
             ];
         } else if (
-            x.symptoms.wasting && x.symptoms.faceelderly &&
-            x.symptoms.cranky && x.symptoms.wrinkledskin &&
-            x.symptoms.mildwastingsigns && x.symptoms.concavestomach &&
-            x.symptoms.infection && x.symptoms.diarrhea
+            x.symptoms.wasting &&                         // severe muscle/fat loss
+            !x.symptoms.edema &&                          // NO swelling
+            x.symptoms.faceelderly &&                      // elderly look
+            x.symptoms.wrinkledskin &&                      // loose wrinkled skin
+            x.symptoms.concavestomach &&                    // sunken belly
+            x.symptoms.prominentribs &&                      // visible ribs
+            x.symptoms.infection &&                         // infections present
+            x.symptoms.diarrhea                             // diarrhea common
         ) {
             Type = "Marasmus";                               // Rule 20
             TypeConfidence = "High";
             SymptomSource = [
-                "wasting", "faceelderly", "cranky", "wrinkledskin",
-                "mildwastingsigns", "concavestomach", "infection", "diarrhea"
+                "wasting", "faceelderly", "wrinkledskin",
+                "concavestomach", "prominentribs", "infection", "diarrhea"
             ];
         } else if (x.symptoms.edema && x.symptoms.hairsparse) {
             Type = "Kwashiorkor";                            // Rule 22
